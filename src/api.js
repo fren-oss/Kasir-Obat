@@ -1,10 +1,12 @@
-const URL = import.meta.env.VITE_SCRIPT_URL;
+const URL = import.meta.env.VITE_SCRIPT_URL || 
+  "https://script.google.com/macros/s/AKfycbzLS6c4Yz4FRUXB2Job9BSY1xeAGdh6GgiW9IijwuCthZnezLv9rwXpi5wE23Gn_nz9Ow/exec";
 const API_VERSION = 5;
 
 // Debug: Log environment variable
 console.log('🔍 Debug Environment Variable:');
-console.log('  VITE_SCRIPT_URL:', URL);
-console.log('  Exists:', !!URL);
+console.log('  VITE_SCRIPT_URL:', import.meta.env.VITE_SCRIPT_URL);
+console.log('  Using URL:', URL);
+console.log('  Is fallback:', !import.meta.env.VITE_SCRIPT_URL);
 console.log('  All env keys:', Object.keys(import.meta.env));
 
 export const session = {
