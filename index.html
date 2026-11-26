@@ -70,6 +70,36 @@
             loading.remove();
           }
         }, 1000);
+        
+        // Safety: Remove loading after 10 seconds even if app doesn't render
+        setTimeout(() => {
+          const loading = document.getElementById('loading');
+          if (loading) {
+            loading.innerHTML = `
+              <div style="text-align: center;">
+                <h2 style="color: white; margin-bottom: 20px;">⚠️ Gagal Memuat</h2>
+                <p style="color: white; margin-bottom: 20px;">Aplikasi gagal dimuat dalam 10 detik.</p>
+                <p style="color: rgba(255,255,255,0.8); font-size: 14px; margin-bottom: 30px;">
+                  Kemungkinan: Environment variable belum di-set di Vercel
+                </p>
+                <button 
+                  onclick="location.reload()" 
+                  style="padding: 12px 32px; font-size: 16px; background: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
+                  Muat Ulang
+                </button>
+                <div style="margin-top: 30px; padding: 20px; background: rgba(0,0,0,0.2); border-radius: 8px; text-align: left; max-width: 400px;">
+                  <p style="color: white; font-size: 14px; margin: 0 0 10px 0;"><strong>Cara Fix:</strong></p>
+                  <ol style="color: rgba(255,255,255,0.9); font-size: 13px; margin: 0; padding-left: 20px;">
+                    <li>Buka Vercel Dashboard</li>
+                    <li>Settings → Environment Variables</li>
+                    <li>Add: VITE_SCRIPT_URL</li>
+                    <li>Redeploy</li>
+                  </ol>
+                </div>
+              </div>
+            `;
+          }
+        }, 10000);
       });
     </script>
     <script type="module" src="/src/main.jsx"></script>
