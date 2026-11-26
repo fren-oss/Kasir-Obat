@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kasir-obat-v1';
+const CACHE_NAME = 'kasir-obat-v2';
 const urlsToCache = [
   '/',
   '/index.html',

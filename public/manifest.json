@@ -2,7 +2,7 @@
   "name": "Kasir Obat",
   "short_name": "Kasir",
   "description": "Aplikasi kasir untuk apotek dan toko obat",
-  "start_url": "/",
+  "start_url": "/?v=2",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#3b82f6",
