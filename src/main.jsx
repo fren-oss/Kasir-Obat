@@ -16,21 +16,6 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-// Unlock screen orientation for landscape support
-if (screen && screen.orientation && typeof screen.orientation.unlock === 'function') {
-  screen.orientation.unlock().catch((err) => {
-    console.log('Orientation unlock:', err.message);
-  });
-}
-
-// Allow any orientation
-if (screen && screen.orientation && typeof screen.orientation.lock === 'function') {
-  // Don't lock, allow free rotation
-  window.addEventListener('orientationchange', () => {
-    console.log('Orientation changed to:', screen.orientation.type);
-  });
-}
-
 // Global error handler
 window.addEventListener('error', (event) => {
   console.error('Global error:', event.error);
