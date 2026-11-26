@@ -2536,3 +2536,49 @@ th {
     animation-fill-mode: both;
   }
 }
+
+
+/* Landscape Mode Support for Tablets */
+@media screen and (orientation: landscape) and (min-width: 768px) {
+  body {
+    overflow-x: hidden;
+  }
+  
+  /* Make container wider in landscape */
+  .container {
+    max-width: 100%;
+    padding: var(--s2);
+  }
+  
+  /* Adjust spacing for landscape */
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+
+/* Tablet Landscape - Specific Adjustments */
+@media screen and (orientation: landscape) and (min-width: 768px) and (max-width: 1024px) {
+  /* Optimize for tablet landscape */
+  h1 {
+    font-size: 1.75rem;
+  }
+  
+  h2 {
+    font-size: 1.25rem;
+  }
+  
+  /* Buttons layout in landscape */
+  .button-group {
+    display: flex;
+    gap: var(--s2);
+    flex-wrap: wrap;
+  }
+}
+
+/* Support for screen rotation */
+@media screen and (orientation: landscape) {
+  html, body {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+  }
+}
