@@ -31,8 +31,36 @@ if ('lock' in screen.orientation) {
   });
 }
 
-createRoot(document.getElementById("root")).render(
-  <MotionConfig reducedMotion="user">
-    <App />
-  </MotionConfig>,
-);
+// Global error handler
+window.addEventListener('error', (event) => {
+  console.error('Global error:', event.error);
+});
+
+window.addEventListener('unhandledrejection', (event) => {
+  console.error('Unhandled promise rejection:', event.reason);
+});
+
+// Render app with error boundary
+try {
+  const root = document.getElementById("root");
+  if (!root) {
+    throw new Error('Root element not found');
+  }
+  
+  createRoot(root).render(
+    <MotionConfig reducedMotion="user">
+      <App />
+    </MotionConfig>,
+  );
+} catch (error) {
+  console.error('Failed to render app:', error);
+  document.body.innerHTML = `
+    <div style="padding: 40px; text-align: center; font-family: system-ui;">
+      <h1>⚠️ Gagal memuat aplikasi</h1>
+      <p>Error: ${error.message}</p>
+      <button onclick="location.reload()" style="padding: 12px 24px; font-size: 16px; cursor: pointer;">
+        Muat Ulang
+      </button>
+    </div>
+  `;
+}
