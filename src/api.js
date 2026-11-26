@@ -1,6 +1,12 @@
 const URL = import.meta.env.VITE_SCRIPT_URL;
 const API_VERSION = 5;
 
+// Debug: Log environment variable
+console.log('🔍 Debug Environment Variable:');
+console.log('  VITE_SCRIPT_URL:', URL);
+console.log('  Exists:', !!URL);
+console.log('  All env keys:', Object.keys(import.meta.env));
+
 export const session = {
   get: () => JSON.parse(sessionStorage.getItem("kasir") || "null"),
   set: (v) => sessionStorage.setItem("kasir", JSON.stringify(v)),
