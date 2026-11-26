@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate PWA Icons</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+        }
+        canvas { border: 1px solid #ddd; margin: 20px; }
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover { background: #2563eb; }
+        .preview { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+    </style>
+</head>
+<body>
+    <h1>🏥 Generator Icon Kasir Obat</h1>
+    <p>Klik tombol di bawah untuk generate dan download icon</p>
+    
+    <div class="preview">
+        <div>
+            <h3>192x192</h3>
+            <canvas id="canvas192" width="192" height="192"></canvas>
+            <br>
+            <button onclick="download(192)">Download 192x192</button>
+        </div>
+        <div>
+            <h3>512x512</h3>
+            <canvas id="canvas512" width="512" height="512"></canvas>
+            <br>
+            <button onclick="download(512)">Download 512x512</button>
+        </div>
+    </div>
+
+    <script>
+        function drawIcon(canvas, size) {
+            const ctx = canvas.getContext('2d');
+            
+            // Background dengan rounded corners
+            ctx.fillStyle = '#3b82f6';
+            ctx.beginPath();
+            ctx.roundRect(0, 0, size, size, size * 0.15);
+            ctx.fill();
+            
+            // Medical Cross (white)
+            ctx.fillStyle = 'white';
+            const crossSize = size * 0.47;
+            const crossThickness = size * 0.16;
+            const center = size / 2;
+            
+            // Horizontal bar
+            ctx.beginPath();
+            ctx.roundRect(
+                center - crossSize / 2, 
+                center - crossThickness / 2,
+                crossSize,
+                crossThickness,
+                size * 0.02
+            );
+            ctx.fill();
+            
+            // Vertical bar
+            ctx.beginPath();
+            ctx.roundRect(
+                center - crossThickness / 2,
+                center - crossSize / 2,
+                crossThickness,
+                crossSize,
+                size * 0.02
+            );
+            ctx.fill();
+            
+            // Plus symbol in corner (green circle)
+            const plusX = size * 0.78;
+            const plusY = size * 0.22;
+            const plusRadius = size * 0.12;
+            
+            ctx.fillStyle = '#10b981';
+            ctx.beginPath();
+            ctx.arc(plusX, plusY, plusRadius, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Plus sign (white)
+            ctx.fillStyle = 'white';
+            const plusSize = plusRadius * 0.6;
+            const plusThick = plusRadius * 0.27;
+            
+            // Horizontal
+            ctx.fillRect(
+                plusX - plusSize / 2,
+                plusY - plusThick / 2,
+                plusSize,
+                plusThick
+            );
+            
+            // Vertical
+            ctx.fillRect(
+                plusX - plusThick / 2,
+                plusY - plusSize / 2,
+                plusThick,
+                plusSize
+            );
+        }
+
+        // Draw icons
+        drawIcon(document.getElementById('canvas192'), 192);
+        drawIcon(document.getElementById('canvas512'), 512);
+
+        function download(size) {
+            const canvas = document.getElementById('canvas' + size);
+            const link = document.createElement('a');
+            link.download = `icon-${size}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Background -->
+  <rect width="512" height="512" fill="#3b82f6" rx="80"/>
+  
+  <!-- Medical Cross -->
+  <g transform="translate(256, 256)">
+    <!-- Horizontal bar -->
+    <rect x="-120" y="-40" width="240" height="80" fill="white" rx="10"/>
+    <!-- Vertical bar -->
+    <rect x="-40" y="-120" width="80" height="240" fill="white" rx="10"/>
+  </g>
+  
+  <!-- Plus symbol in corner (representing addition/cashier) -->
+  <g transform="translate(400, 112)">
+    <circle r="60" fill="#10b981"/>
+    <rect x="-30" y="-8" width="60" height="16" fill="white" rx="4"/>
+    <rect x="-8" y="-30" width="16" height="60" fill="white" rx="4"/>
+  </g>
+</svg>
