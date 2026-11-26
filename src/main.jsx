@@ -52,22 +52,20 @@ try {
       <App />
     </MotionConfig>,
   );
-  
-  // Notify that app is ready
-  setTimeout(() => {
-    if (window.appReady) {
-      window.appReady();
-    }
-  }, 500);
 } catch (error) {
   console.error('Failed to render app:', error);
+  const loading = document.getElementById('loading');
+  if (loading) loading.remove();
+  
   document.body.innerHTML = `
-    <div style="padding: 40px; text-align: center; font-family: system-ui;">
-      <h1>⚠️ Gagal memuat aplikasi</h1>
-      <p>Error: ${error.message}</p>
-      <button onclick="location.reload()" style="padding: 12px 24px; font-size: 16px; cursor: pointer;">
-        Muat Ulang
-      </button>
+    <div style="padding: 40px; text-align: center; font-family: system-ui; background: linear-gradient(135deg, #8dac16, #587aa5); min-height: 100vh; display: flex; align-items: center; justify-content: center; color: white;">
+      <div>
+        <h1 style="margin-bottom: 20px;">⚠️ Gagal Memuat Aplikasi</h1>
+        <p style="margin-bottom: 30px;">Error: ${error.message}</p>
+        <button onclick="location.reload()" style="padding: 12px 32px; font-size: 16px; cursor: pointer; background: white; border: none; border-radius: 8px; font-weight: 600;">
+          Muat Ulang
+        </button>
+      </div>
     </div>
   `;
 }

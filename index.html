@@ -62,74 +62,29 @@
       </div>
     </div>
     <script>
-      // Hide loading when app renders
-      let appRendered = false;
-      
-      // Function to check if React app is rendered
-      function checkAppRendered() {
+      // Simple loading removal - check every 200ms
+      const checkInterval = setInterval(() => {
         const root = document.getElementById('root');
-        const hasContent = root && root.children.length > 0;
-        if (hasContent && !appRendered) {
-          appRendered = true;
-          const loading = document.getElementById('loading');
-          if (loading) {
-            loading.style.opacity = '0';
-            loading.style.transition = 'opacity 0.3s';
-            setTimeout(() => loading.remove(), 300);
-          }
-        }
-      }
-      
-      // Check every 100ms for first 3 seconds
-      window.addEventListener('DOMContentLoaded', () => {
-        let checks = 0;
-        const checkInterval = setInterval(() => {
-          checkAppRendered();
-          checks++;
-          if (appRendered || checks > 30) { // Stop after 3 seconds
-            clearInterval(checkInterval);
-          }
-        }, 100);
+        const loading = document.getElementById('loading');
         
-        // Safety: Show error after 15 seconds if still not rendered
-        setTimeout(() => {
-          if (!appRendered) {
-            const loading = document.getElementById('loading');
-            if (loading) {
-              loading.innerHTML = `
-                <div style="text-align: center; padding: 20px;">
-                  <h2 style="color: white; margin-bottom: 20px;">⚠️ Gagal Memuat</h2>
-                  <p style="color: white; margin-bottom: 10px;">Aplikasi gagal dimuat dalam 15 detik.</p>
-                  <p style="color: rgba(255,255,255,0.8); font-size: 14px; margin-bottom: 30px;">
-                    Kemungkinan: JavaScript error atau koneksi lambat
-                  </p>
-                  <button 
-                    onclick="location.reload()" 
-                    style="padding: 12px 32px; font-size: 16px; background: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; margin-bottom: 20px;">
-                    Muat Ulang
-                  </button>
-                  <div style="margin-top: 20px;">
-                    <button 
-                      onclick="window.open('https://kasir-obat.vercel.app', '_blank')" 
-                      style="padding: 8px 20px; font-size: 14px; background: rgba(255,255,255,0.2); color: white; border: 1px solid white; border-radius: 6px; cursor: pointer;">
-                      Buka di Tab Baru
-                    </button>
-                  </div>
-                  <p style="color: rgba(255,255,255,0.7); font-size: 12px; margin-top: 20px;">
-                    Jika masih error, buka Console (F12) untuk lihat detail error
-                  </p>
-                </div>
-              `;
-            }
-          }
-        }, 15000);
-      });
+        // If React has rendered content, remove loading
+        if (root && root.children.length > 0 && loading) {
+          loading.style.opacity = '0';
+          loading.style.transition = 'opacity 0.3s';
+          setTimeout(() => loading.remove(), 300);
+          clearInterval(checkInterval);
+        }
+      }, 200);
       
-      // Expose function globally so React can call it
-      window.appReady = function() {
-        appRendered = true;
-        checkAppRendered();
-      };
+      // Failsafe: Remove loading after 20 seconds no matter what
+      setTimeout(() => {
+        const loading = document.getElementById('loading');
+        if (loading) {
+          loading.remove();
+          console.error('Loading timeout - removed loading screen after 20s');
+        }
+        clearInterval(checkInterval);
+      }, 20000);
     </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
