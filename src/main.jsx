@@ -17,14 +17,14 @@ if ('serviceWorker' in navigator) {
 }
 
 // Unlock screen orientation for landscape support
-if ('orientation' in screen && 'unlock' in screen.orientation) {
+if (screen && screen.orientation && typeof screen.orientation.unlock === 'function') {
   screen.orientation.unlock().catch((err) => {
     console.log('Orientation unlock:', err.message);
   });
 }
 
 // Allow any orientation
-if ('lock' in screen.orientation) {
+if (screen && screen.orientation && typeof screen.orientation.lock === 'function') {
   // Don't lock, allow free rotation
   window.addEventListener('orientationchange', () => {
     console.log('Orientation changed to:', screen.orientation.type);
