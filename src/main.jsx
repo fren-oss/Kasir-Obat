@@ -52,6 +52,13 @@ try {
       <App />
     </MotionConfig>,
   );
+  
+  // Notify that app is ready
+  setTimeout(() => {
+    if (window.appReady) {
+      window.appReady();
+    }
+  }, 500);
 } catch (error) {
   console.error('Failed to render app:', error);
   document.body.innerHTML = `

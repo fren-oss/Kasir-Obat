@@ -63,44 +63,73 @@
     </div>
     <script>
       // Hide loading when app renders
-      window.addEventListener('DOMContentLoaded', () => {
-        setTimeout(() => {
-          const loading = document.getElementById('loading');
-          if (loading && document.querySelector('#root > *')) {
-            loading.remove();
-          }
-        }, 1000);
-        
-        // Safety: Remove loading after 10 seconds even if app doesn't render
-        setTimeout(() => {
+      let appRendered = false;
+      
+      // Function to check if React app is rendered
+      function checkAppRendered() {
+        const root = document.getElementById('root');
+        const hasContent = root && root.children.length > 0;
+        if (hasContent && !appRendered) {
+          appRendered = true;
           const loading = document.getElementById('loading');
           if (loading) {
-            loading.innerHTML = `
-              <div style="text-align: center;">
-                <h2 style="color: white; margin-bottom: 20px;">⚠️ Gagal Memuat</h2>
-                <p style="color: white; margin-bottom: 20px;">Aplikasi gagal dimuat dalam 10 detik.</p>
-                <p style="color: rgba(255,255,255,0.8); font-size: 14px; margin-bottom: 30px;">
-                  Kemungkinan: Environment variable belum di-set di Vercel
-                </p>
-                <button 
-                  onclick="location.reload()" 
-                  style="padding: 12px 32px; font-size: 16px; background: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
-                  Muat Ulang
-                </button>
-                <div style="margin-top: 30px; padding: 20px; background: rgba(0,0,0,0.2); border-radius: 8px; text-align: left; max-width: 400px;">
-                  <p style="color: white; font-size: 14px; margin: 0 0 10px 0;"><strong>Cara Fix:</strong></p>
-                  <ol style="color: rgba(255,255,255,0.9); font-size: 13px; margin: 0; padding-left: 20px;">
-                    <li>Buka Vercel Dashboard</li>
-                    <li>Settings → Environment Variables</li>
-                    <li>Add: VITE_SCRIPT_URL</li>
-                    <li>Redeploy</li>
-                  </ol>
-                </div>
-              </div>
-            `;
+            loading.style.opacity = '0';
+            loading.style.transition = 'opacity 0.3s';
+            setTimeout(() => loading.remove(), 300);
           }
-        }, 10000);
+        }
+      }
+      
+      // Check every 100ms for first 3 seconds
+      window.addEventListener('DOMContentLoaded', () => {
+        let checks = 0;
+        const checkInterval = setInterval(() => {
+          checkAppRendered();
+          checks++;
+          if (appRendered || checks > 30) { // Stop after 3 seconds
+            clearInterval(checkInterval);
+          }
+        }, 100);
+        
+        // Safety: Show error after 15 seconds if still not rendered
+        setTimeout(() => {
+          if (!appRendered) {
+            const loading = document.getElementById('loading');
+            if (loading) {
+              loading.innerHTML = `
+                <div style="text-align: center; padding: 20px;">
+                  <h2 style="color: white; margin-bottom: 20px;">⚠️ Gagal Memuat</h2>
+                  <p style="color: white; margin-bottom: 10px;">Aplikasi gagal dimuat dalam 15 detik.</p>
+                  <p style="color: rgba(255,255,255,0.8); font-size: 14px; margin-bottom: 30px;">
+                    Kemungkinan: JavaScript error atau koneksi lambat
+                  </p>
+                  <button 
+                    onclick="location.reload()" 
+                    style="padding: 12px 32px; font-size: 16px; background: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; margin-bottom: 20px;">
+                    Muat Ulang
+                  </button>
+                  <div style="margin-top: 20px;">
+                    <button 
+                      onclick="window.open('https://kasir-obat.vercel.app', '_blank')" 
+                      style="padding: 8px 20px; font-size: 14px; background: rgba(255,255,255,0.2); color: white; border: 1px solid white; border-radius: 6px; cursor: pointer;">
+                      Buka di Tab Baru
+                    </button>
+                  </div>
+                  <p style="color: rgba(255,255,255,0.7); font-size: 12px; margin-top: 20px;">
+                    Jika masih error, buka Console (F12) untuk lihat detail error
+                  </p>
+                </div>
+              `;
+            }
+          }
+        }, 15000);
       });
+      
+      // Expose function globally so React can call it
+      window.appReady = function() {
+        appRendered = true;
+        checkAppRendered();
+      };
     </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>

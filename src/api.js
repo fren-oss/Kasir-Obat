@@ -2,12 +2,17 @@ const URL = import.meta.env.VITE_SCRIPT_URL ||
   "https://script.google.com/macros/s/AKfycbzLS6c4Yz4FRUXB2Job9BSY1xeAGdh6GgiW9IijwuCthZnezLv9rwXpi5wE23Gn_nz9Ow/exec";
 const API_VERSION = 5;
 
-// Debug: Log environment variable
+// Debug: Log environment variable (akan muncul di Console browser)
 console.log('🔍 Debug Environment Variable:');
-console.log('  VITE_SCRIPT_URL:', import.meta.env.VITE_SCRIPT_URL);
-console.log('  Using URL:', URL);
-console.log('  Is fallback:', !import.meta.env.VITE_SCRIPT_URL);
-console.log('  All env keys:', Object.keys(import.meta.env));
+console.log('  VITE_SCRIPT_URL dari env:', import.meta.env.VITE_SCRIPT_URL);
+console.log('  URL yang digunakan:', URL);
+console.log('  Pakai fallback?:', !import.meta.env.VITE_SCRIPT_URL);
+console.log('  Build time:', new Date().toISOString());
+
+// Alert untuk debugging (akan muncul sebagai popup)
+if (!import.meta.env.VITE_SCRIPT_URL) {
+  console.warn('⚠️ WARNING: VITE_SCRIPT_URL tidak ada, menggunakan fallback URL');
+}
 
 export const session = {
   get: () => JSON.parse(sessionStorage.getItem("kasir") || "null"),
