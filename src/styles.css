@@ -1641,21 +1641,43 @@ th {
     gap: 12px;
   }
   .pcard {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
+    display: flex;
+    flex-direction: row;
     max-width: none;
-    min-height: 0;
-    align-content: start;
-    gap: 6px;
-    padding: 8px;
+    min-height: 120px;
+    gap: 10px;
+    padding: 10px;
   }
   .thumb {
-    width: 100%;
-    height: 36px;
-    border-radius: 12px;
+    width: 80px;
+    min-width: 80px;
+    height: 80px;
+    flex: none;
+    border-radius: 14px;
   }
   .pbody {
-    width: 100%;
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .cat-tag {
+    font-size: 0.65rem;
+  }
+  .ptop strong {
+    font-size: 0.9rem;
+  }
+  .pname {
+    font-size: 0.85rem;
+    line-height: 1.25;
+  }
+  .pact .muted {
+    font-size: 0.75rem;
+  }
+  .step output {
+    min-width: 30px;
+    font-size: 0.85rem;
   }
 }
 @media (min-width: 1100px) {
@@ -1668,12 +1690,58 @@ th {
 }
 @media (min-width: 1100px) and (max-width: 1399px) and (pointer: coarse) {
   .pcard {
-    max-width: 280px;
+    display: flex;
+    flex-direction: row;
+    max-width: 320px;
+    min-height: 130px;
     justify-self: center;
-    gap: 8px;
+    gap: 12px;
+    padding: 12px;
   }
   .thumb {
-    width: 76px;
+    width: 90px;
+    min-width: 90px;
+    height: 90px;
+    flex: none;
+  }
+  .pbody {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .ptop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+  }
+  .cat-tag {
+    font-size: 0.65rem;
+  }
+  .ptop strong {
+    font-size: 0.95rem;
+    flex-shrink: 0;
+  }
+  .pname {
+    font-size: 0.9rem;
+    line-height: 1.25;
+    margin: 2px 0 4px 0;
+  }
+  .pact {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    margin-top: auto;
+  }
+  .pact .muted {
+    font-size: 0.8rem;
+  }
+  .step output {
+    min-width: 32px;
+    font-size: 0.9rem;
   }
 }
 @media (max-width: 600px) {
@@ -2595,9 +2663,75 @@ th {
     padding: var(--s2);
   }
   
-  /* Adjust spacing for landscape */
+  /* Adjust spacing for landscape - use 3 columns for better use of space */
   .grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+  
+  /* Ensure cards maintain horizontal layout in landscape */
+  .pcard {
+    display: flex !important;
+    flex-direction: row !important;
+    max-width: none;
+    min-height: 125px;
+    gap: 12px;
+    padding: 12px;
+  }
+  
+  .thumb {
+    width: 85px !important;
+    min-width: 85px !important;
+    height: 85px !important;
+    flex: none !important;
+    border-radius: 14px !important;
+  }
+  
+  .pbody {
+    flex: 1 !important;
+    min-width: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+  }
+  
+  .ptop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+  }
+  
+  .cat-tag {
+    font-size: 0.65rem;
+  }
+  
+  .ptop strong {
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+  
+  .pname {
+    font-size: 0.88rem;
+    line-height: 1.3;
+    margin: 2px 0 4px 0;
+  }
+  
+  .pact {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    margin-top: auto;
+  }
+  
+  .pact .muted {
+    font-size: 0.8rem;
+  }
+  
+  .step output {
+    min-width: 32px;
+    font-size: 0.88rem;
   }
 }
 
